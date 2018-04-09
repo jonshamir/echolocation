@@ -9,8 +9,8 @@ Geo = require('geolib');
 
 let audioContext;
 let scene;
-let audioElement;
-let soundSource;
+let audioElements = [];
+let soundSources = [];
 let audioElementSource;
 let heading = 0;
 let lat = 31.77247675;
@@ -67,9 +67,9 @@ let audioReady = false;
 let compassReady = false;
 let isPlaying = false;
 let distance = 5;
-let SOUND_URL = './assets/song.wav';
 
 function rotateListener(deg) {
+  // Update onlu on change of more than 2 degrees from last measurement
   if (
     !audioReady ||
     (Math.floor(deg) >= heading - 2 && Math.floor(deg) <= heading + 2)
@@ -97,22 +97,28 @@ function updateLocation(pos) {
 
 function initAudio() {
   audioContext = new (window.AudioContext || window.webkitAudioContext)();
-  audioElement = document.createElement('audio');
-  audioElement.src = SOUND_URL;
-  audioElement.load();
-  audioElement.loop = true;
-  audioElement.crossOrigin = 'anonymous';
-
-  audioElementSource = audioContext.createMediaElementSource(audioElement);
-
-  // Initialize scene and create Source(s).
   scene = new RA.ResonanceAudio(audioContext, { ambisonicOrder: 1 });
   scene.setRoomProperties(roomDimensions, roomMaterials.outside);
-  soundSource = scene.createSource();
-  audioElementSource.connect(soundSource.input);
-  scene.output.connect(audioContext.destination);
 
-  soundSource.setPosition(distance, distance, 1);
+  let audioElementSources = [];
+  for (let i = 0; i < sources.length; i++) {
+    // create audio elements
+    audioElements[i] = document.createElement('audio');
+    audioElements[i].src = sources[i].src;
+    audioElements[i].load();
+    audioElements[i].loop = true;
+    audioElements[i].crossOrigin = 'anonymous';
+    audioElementSources[i] = audioContext.createMediaElementSource(
+      audioElements[i]
+    );
+
+    // create audio sources and add to scene
+    soundSources[i] = scene.createSource();
+    soundSources[i].setPosition(distance, distance, 1);
+    audioElementSources[i].connect(soundSources[i].input);
+  }
+
+  scene.output.connect(audioContext.destination);
 
   audioReady = true;
 }
@@ -154,11 +160,15 @@ let onLoad = function() {
       });
     }
     if (isPlaying) {
-      audioElement.pause();
+      audioElements.forEach(element => {
+        element.pause();
+      });
       isPlaying = false;
       e.target.innerHTML = 'Play';
     } else {
-      audioElement.play();
+      audioElements.forEach(element => {
+        element.play();
+      });
       isPlaying = true;
       e.target.innerHTML = 'Pause';
     }
