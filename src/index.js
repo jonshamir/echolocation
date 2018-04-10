@@ -4,7 +4,6 @@ require('app/main.scss');
 
 // Import JS
 require('./compass.js');
-Geo = require('geolib');
 
 let audioContext;
 let scene;
@@ -105,12 +104,12 @@ function setDistance(d) {
 function updatePositions() {
   if (!audioReady) return;
   for (let i = 0; i < sources.length; i++) {
-    let angle = Geo.getBearing(
+    let angle = geolib.getBearing(
       { latitude: lat, longitude: long },
       { latitude: sources[i].lat, longitude: sources[i].long }
     );
     let distance =
-      Geo.getDistance(
+      geolib.getDistance(
         { latitude: lat, longitude: long },
         { latitude: sources[i].lat, longitude: sources[i].long }
       ) * distScale;
@@ -126,9 +125,9 @@ function updateLocation(pos) {
   lat = pos.coords.latitude;
   long = pos.coords.longitude;
   document.getElementById('lat').innerHTML =
-    Geo.decimal2sexagesimal(lat) + ' N';
+    geolib.decimal2sexagesimal(lat) + ' N';
   document.getElementById('long').innerHTML =
-    Geo.decimal2sexagesimal(long) + ' E';
+    geolib.decimal2sexagesimal(long) + ' E';
 }
 
 function initAudio() {

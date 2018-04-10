@@ -29,7 +29,6 @@
     "webpack-dev-server": "^2.2.1"
   },
   "dependencies": {
-    "geolib": "^2.0.24",
     "normalize.css": "^5.0.0"
   }
 }
