@@ -4,7 +4,6 @@ require('app/main.scss');
 
 // Import JS
 require('./compass.js');
-RA = require('resonance-audio');
 Geo = require('geolib');
 
 let audioContext;
@@ -134,7 +133,7 @@ function updateLocation(pos) {
 
 function initAudio() {
   audioContext = new (window.AudioContext || window.webkitAudioContext)();
-  scene = new RA.ResonanceAudio(audioContext, { ambisonicOrder: 1 });
+  scene = new ResonanceAudio(audioContext, { ambisonicOrder: 1 });
   // scene.setRoomProperties(roomDimensions, roomMaterials.marble);
 
   let audioElementSources = [];
