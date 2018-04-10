@@ -3,7 +3,7 @@ var path = require('path');
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-var fs = require('fs');
+var BabelPlugin = require('babel-webpack-plugin');
 
 var PATHS = {
   entry: path.resolve('./src/index'),
@@ -33,7 +33,8 @@ var config = {
       },
       {
         test: /\.js$/,
-        exclude: /node_modules/
+        exclude: /node_modules/,
+        use: ['babel-loader']
       },
       {
         test: /\.(css|scss)$/,
@@ -77,6 +78,12 @@ if (process.env.npm_lifecycle_event == 'build') {
       template: 'src/index.html',
       // favicon: 'src/favicon.ico',
       inject: false
+    }),
+    new BabelPlugin({
+      test: /\.js$/,
+      presets: ['es2015'],
+      sourceMaps: false,
+      compact: false
     })
   ];
 } else {
@@ -85,10 +92,7 @@ if (process.env.npm_lifecycle_event == 'build') {
   config.devServer = {
     contentBase: 'src',
     noInfo: true,
-    https: {
-      key: fs.readFileSync('src/assets/echo.key'),
-      cert: fs.readFileSync('src/assets/echo.cer')
-    },
+    https: true,
     historyApiFallback: true,
     publicPath: '/',
     host: '10.100.102.17',

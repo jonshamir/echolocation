@@ -4,15 +4,27 @@
     <title>Echolocation</title>
 
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" type="text/css" href="/main.css">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="apple-touch-startup-image" href="/assets/splash.png">
+    <link rel="apple-touch-icon" href="/assets/icon.png">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, shrink-to-fit=no">
+    <!-- <link rel="stylesheet" type="text/css" href="/main.css"> -->
   </head>
   <body>
-    <h1 id="heading">Hello</h1>
+    <br /><br /><br />
     <button id="play">Play</button>
+    <br /><br />
+    <h1 id="heading">-</h1>
+    <span>Heading</span>
+    <h1 id="lat">-</h1>
+    <span>Latitude</span>
+    <h1 id="long">-</h1>
+    <span>Longitude</span>
+    <br /><br /><br />
+    <input type="range" min="1" max="200" value="50" class="slider" id="dist">
     <br />
-    <input type="range" min="-180" max="180" value="0" class="slider" id="angle">
-
+    <span>Distance</span>
     <script type="text/javascript" src="/bundle.js"></script>
   </body>
 </html>
