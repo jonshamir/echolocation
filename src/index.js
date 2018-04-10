@@ -20,8 +20,8 @@ let long = 35.21536082;
 
 let sources = [
   {
-    lat: 31.767436,
-    long: 35.215317,
+    lat: 31.772839,
+    long: 35.214825,
     src: './assets/song.wav'
   }
   // {
