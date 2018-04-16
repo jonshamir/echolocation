@@ -12,17 +12,22 @@
     <link rel="stylesheet" type="text/css" href="main.css">
   </head>
   <body>
-    <br /><br /><br />
-    <button id="play">Play</button>
-    <br /><br />
-    <h1 id="heading">-</h1>
-    <span>Direction</span>
-    <h1 id="lat">-</h1>
-    <h1 id="long">-</h1>
-    <br /><br /><br />
-    <input type="range" min="1" max="200" value="50" class="slider" id="dist">
     <br />
-    <span>Distance</span>
+    <span>Direction</span>
+    <h1 id="heading">-</h1>
+    <br />
+    <button id="play">Start</button>
+    <br />
+    <!-- <input type="range" min="1" max="200" value="50" class="slider" id="dist">
+    <br />
+    <span>Distance</span> -->
+    <div id="hints" class="hidden">
+      <span>Tap a location to hear it</span>
+    </div>
+    <br /><br />
+    <div id="options" class="hidden">
+      <span>Guess where you are:</span>
+    </div>
     <script src="https://unpkg.com/geolib@2.0.24/dist/geolib.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/resonance-audio/build/resonance-audio.min.js"></script>
     <script type="text/javascript" src="bundle.js"></script>

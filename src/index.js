@@ -73,13 +73,18 @@ let sources = [
   }
 ];
 
+let solution = 'museum';
+
 let hints = ['knesset', 'hansen', 'herzl', 'market'];
 let hintSources = sources.filter(source => hints.indexOf(source.id) != -1);
 
+let options = ['oldcity', 'teddy', 'hill', 'museum'];
+let optSources = sources.filter(source => options.indexOf(source.id) != -1);
+
 let roomDimensions = {
-  width: 20,
-  height: 5,
-  depth: 20
+  width: 2,
+  height: 2,
+  depth: 2
 };
 let roomMaterials = {
   brick: {
@@ -117,7 +122,9 @@ let roomMaterials = {
 };
 let audioReady = false;
 let isPlaying = false;
-let distScale = 0.01;
+let isStarted = false;
+let distScale = 0.02;
+let dist = 1;
 
 function rotateListener(deg) {
   // Update only on change of more than 2 degrees from last measurement
@@ -129,8 +136,9 @@ function rotateListener(deg) {
 
   heading = deg;
   let angle = toRadians(deg);
-  let x = Math.cos(angle);
-  let y = Math.sin(angle);
+  let x = -Math.sin(angle);
+  let y = Math.cos(angle);
+  console.log(x, y);
   scene.setListenerOrientation(x, y, 0, 0, 0, 1);
 }
 
@@ -153,9 +161,10 @@ function updatePositions() {
         { latitude: hintSources[i].lat, longitude: hintSources[i].long }
       ) * distScale;
 
-    let x = Math.cos(toRadians(deg)) * 15;
-    let y = Math.sin(toRadians(deg)) * 15;
+    let x = Math.sin(toRadians(deg)) * dist;
+    let y = -Math.cos(toRadians(deg)) * dist;
     soundSources[i].setPosition(x, y, 0);
+    soundSources[i].setGain(200 / (distance * distance));
     console.log(hintSources[i].name);
     console.log(deg + ':' + degToCompass(deg));
     console.log(x, y);
@@ -237,18 +246,37 @@ let onLoad = function() {
     let hintButton = document.createElement('button');
     hintButton.innerHTML = hintSources[i].name;
     hintButton.classList.add('hint');
-    hintButton.onclick = () => {
-      audioElements[i].paused
-        ? audioElements[i].play()
-        : audioElements[i].pause();
+    hintButton.onclick = e => {
+      if (audioElements[i].paused) {
+        e.target.classList.add('active');
+        audioElements[i].play();
+      } else {
+        e.target.classList.remove('active');
+        audioElements[i].pause();
+      }
     };
     document.getElementById('hints').append(hintButton);
+  }
+
+  for (let i = 0; i < optSources.length; i++) {
+    let optButton = document.createElement('button');
+    optButton.innerHTML = optSources[i].name;
+    optButton.classList.add('option');
+    optButton.onclick = e => {
+      optSources[i].id == solution ? alert('Correct!') : alert('Wrong!');
+    };
+    document.getElementById('options').append(optButton);
   }
 
   document.getElementById('play').addEventListener('click', function(e) {
     audioContext.resume();
     if (!audioReady) return;
-    if (isPlaying) {
+    if (!isStarted) {
+      e.target.innerHTML = 'Play All';
+      document.getElementById('hints').classList.remove('hidden');
+      document.getElementById('options').classList.remove('hidden');
+      isStarted = true;
+    } else if (isPlaying) {
       audioElements.forEach(element => {
         element.pause();
       });
