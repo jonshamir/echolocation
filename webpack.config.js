@@ -92,11 +92,11 @@ if (process.env.npm_lifecycle_event == 'build') {
   config.devServer = {
     contentBase: 'src',
     noInfo: true,
-    https: true,
+    https: false,
     historyApiFallback: true,
     publicPath: '/',
-    host: '10.100.102.17',
-    hot: false
+    host: '192.168.86.249',
+    hot: true
   };
 }
 
