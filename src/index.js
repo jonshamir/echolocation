@@ -217,19 +217,21 @@ let onLoad = function() {
       document.getElementById('hints').classList.remove('hidden');
       document.getElementById('options').classList.remove('hidden');
       isStarted = true;
-    } else if (isPlaying) {
-      audioElements.forEach(element => {
-        element.pause();
-      });
-      isPlaying = false;
-      e.target.innerHTML = 'Play All';
-    } else {
-      audioElements.forEach(element => {
-        element.play();
-      });
-      isPlaying = true;
-      e.target.innerHTML = 'Pause All';
+      e.target.remove();
     }
+    // } else if (isPlaying) {
+    //   audioElements.forEach(element => {
+    //     element.pause();
+    //   });
+    //   isPlaying = false;
+    //   e.target.innerHTML = 'Play All';
+    // } else {
+    //   audioElements.forEach(element => {
+    //     element.play();
+    //   });
+    //   isPlaying = true;
+    //   e.target.innerHTML = 'Pause All';
+    // }
 
     document.getElementById('play').addEventListener('touchstart', function(e) {
       e.target.classList.add('active');
