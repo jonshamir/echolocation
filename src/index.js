@@ -170,7 +170,8 @@ function setQuestion() {
           q++;
           setQuestion();
         } else {
-          alert('Game Over');
+          document.getElementById('body').innerHTML =
+            '<img src="./assets/logo.png" id="logo"><h1>You Won!</h1>';
         }
       } else {
         alert('Wrong!');

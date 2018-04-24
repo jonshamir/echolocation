@@ -95,7 +95,7 @@ if (process.env.npm_lifecycle_event == 'build') {
     https: false,
     historyApiFallback: true,
     publicPath: '/',
-    host: '192.168.86.249',
+    host: '10.100.102.13',
     hot: true
   };
 }
