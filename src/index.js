@@ -166,6 +166,9 @@ function setQuestion() {
     optButton.onclick = e => {
       if (optSources[i].id == solutions[q]) {
         alert('Correct!');
+        audioElements.forEach(element => {
+          element.pause();
+        });
         if (q < solutions.length - 1) {
           q++;
           setQuestion();
